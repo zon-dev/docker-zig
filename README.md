@@ -1,16 +1,29 @@
-# docker-zig
+# How To Build and Deploy a Zig application with Docker
 
-This docker image is solely for the purpose of creating the image that runs for
-[Zig's Drone CI script](https://github.com/ziglang/zig/tree/master/ci/drone).
-
-**Zig makes Docker irrelevant.** You probably do not need a Docker image to
-build your Zig application, and you definitely do not need this one.
+**Zig makes Docker.** You probably do not need a Docker image to build your Zig application, and you definitely do not need this one.
 
 ## Usage
 
-First, decide whether to bump the base alpine image version. Next:
 
+```bash
+docker build -t ziglang .
 ```
-docker build -t ziglang/static-base:llvm15-$(uname -m)-1 . --build-arg ZIGVER=0.10.0-dev.4560+828735ac0
-docker push ziglang/static-base:llvm15-$(uname -m)-1
+
+```bash
+docker run -it --rm ziglang
+```
+
+Go to the application directory and use zig in docker to build and run your application. For example. Create a [hello-world](https://ziglang.org/documentation/master/#Hello-World) program and run it with docker.
+```bash
+echo '
+const std = @import("std");
+
+pub fn main() void {
+    std.debug.print("Hello, world!\n", .{});
+}
+' > hello.zig
+```
+Now, run your `hello-world` program.
+```bash
+docker run -it --rm -v $PWD:/opt/app ziglang zig run hello.zig
 ```
