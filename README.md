@@ -1,9 +1,6 @@
 # How To Build and Deploy a Zig application with Docker
 
-**Zig makes Docker.** You probably do not need a Docker image to build your Zig application, and you definitely do not need this one.
-
 ## Usage
-
 
 ```bash
 docker build -t ziglang .
